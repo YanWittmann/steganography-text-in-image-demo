@@ -109,19 +109,4 @@ public class MessageCoder {
         }
         return new String(bytes, 0, actualByte == 0 ? bytes.length : actualByte);
     }
-
-    public static void main(String[] args) {
-        String text = "Dieses Blatt wurde von Yan Wittmann für Frau Fimmel für das MA3 Modul zurechtgeschnitten (2023-02-03)";
-        File input = new File("C:/Users/yan20/Downloads/Standardnormalverteilung offiziell.png");
-        File output = new File("C:/Users/yan20/Downloads/Standardnormalverteilung.png");
-
-        final BufferedImage image = new ImageEditor(input).getImage();
-
-        if (false) {
-            final BufferedImage encoded = encodeText(text, image);
-            new ImageEditor(encoded).save(output);
-        } else {
-            System.out.println(decodeText(image));
-        }
-    }
 }

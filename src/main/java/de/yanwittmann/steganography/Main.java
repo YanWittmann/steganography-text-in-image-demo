@@ -2,6 +2,7 @@ package de.yanwittmann.steganography;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.Arrays;
 import java.util.StringJoiner;
 
 public class Main {
@@ -48,9 +49,11 @@ public class Main {
             return null;
         }
 
+        final boolean force = Arrays.asList(args).contains("--force");
+
         final BufferedImage input = new ImageEditor(new File(file)).getImage();
         final String decoded = MessageCoder.decodeText(input);
-        if (isValidDecodedContent(decoded)) {
+        if (isValidDecodedContent(decoded) || force) {
             return decoded.replaceFirst("^:ENC:", "");
         } else {
             System.out.println("No encoded message found in " + file);
@@ -92,7 +95,7 @@ public class Main {
         System.out.println("Usage: java -jar steganography.jar <command> <options>");
         System.out.println("Commands:");
         System.out.println("  encode -f <file> -o <output> -t <text>");
-        System.out.println("  decode -f <file>");
+        System.out.println("  decode -f <file> [--force]");
         System.out.println("  has -f <file>");
     }
 
@@ -101,7 +104,7 @@ public class Main {
         for (int i = 0; i < args.length; i++) {
             if (args[i].equals(option)) {
                 for (int j = i + 1; j < args.length; j++) {
-                    if (args[j].equals("-f") || args[j].equals("-o") || args[j].equals("-t")) {
+                    if (args[j].equals("-f") || args[j].equals("-o") || args[j].equals("-t") || args[j].equals("--force")) {
                         return joiner.toString();
                     }
                     joiner.add(args[j]);
